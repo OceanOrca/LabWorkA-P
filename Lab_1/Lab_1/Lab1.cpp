@@ -4,15 +4,20 @@
 #include "stdafx.h"
 #include "iostream"
 #include "math.h"
-#include <iomanip> 
+#include "iomanip"
+#include"windows.h"
+#include "float.h"
+#pragma fenv_access (on)
 using namespace std;
 
 
 int main()
 {
-	char go = 0;
+
+    char go = 0;
 	double x = 0;
 	double y = 0;
+	double tangensResult = 0;
 	double result = 0;
 
 	
@@ -32,11 +37,23 @@ int main()
 			std::cout << "Please, enter the value of the variable \"X\"\n";
 			std::cin >> x;
 			std::cout << "Please, enter the value of the variable \"Y\"\n";
-			std::cin >> y;
-			result = (sqrt(abs(log(x) + x))) - ((2 * y) / (tan(x*y)));
-			cout << "The result is " << fixed <<  setprecision(5) << result << "\n";
-
+			std::cin >> y;	
+			try 
+			{
+				tangensResult = tan(x*y);
+				if (tangensResult == 0)
+				{
+					throw "Division by zero\n";
+				}
+				result = (sqrt(abs(log(x) + x))) - ((2 * y) / (tangensResult));
+				std::cout << "The result is " << fixed << setprecision(5) << result << "\n";
+			}
+			catch (const char* msg)
+			{
+				std::cout << msg;
+			}
 			
+				
 		}
 	}
 	
